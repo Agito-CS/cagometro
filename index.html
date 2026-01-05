@@ -2,105 +2,165 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cagômetro - Calculadora de Massa Fecal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cagômetro - Mobile Optimized</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f3f4f6;
+            touch-action: manipulation;
         }
         .gradient-bg {
             background: linear-gradient(135deg, #8d6e63 0%, #5d4037 100%);
         }
-        .card-stats {
-            background: rgba(141, 110, 99, 0.1);
-            border-left: 4px solid #5d4037;
+        .tnt-bg {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+        }
+        input[type="range"] {
+            height: 15px;
+        }
+        input[type="date"] {
+            appearance: none;
+            min-height: 48px;
+        }
+        button {
+            min-height: 55px;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="bg-gray-100 min-h-screen">
 
-    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden my-8">
+    <div class="max-w-md mx-auto bg-white min-h-screen shadow-xl flex flex-col">
         <!-- Header -->
-        <div class="gradient-bg p-8 text-center text-white">
-            <div class="text-6xl mb-4">💩</div>
-            <h1 class="text-3xl font-800 uppercase tracking-tighter">Cagômetro</h1>
-            <p class="text-sm opacity-90 mt-2 font-medium">Descubra o impacto energético do seu legado.</p>
+        <div class="gradient-bg p-6 text-center text-white rounded-b-[40px] shadow-lg">
+            <div class="text-5xl mb-2">💩</div>
+            <h1 class="text-2xl font-800 uppercase tracking-tighter">Cagômetro</h1>
+            <p class="text-xs opacity-80 font-medium">Versão Mobile & Energética</p>
         </div>
 
-        <!-- Form -->
-        <div class="p-8 space-y-6">
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Quando você veio ao mundo?</label>
+        <!-- Form Section -->
+        <div class="p-6 space-y-5 flex-grow">
+            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Data de Nascimento</label>
                 <input type="date" id="birthdate" 
-                       class="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-amber-600 focus:outline-none transition-colors">
+                       class="w-full p-3 bg-white border-2 border-gray-200 rounded-xl focus:border-amber-600 focus:outline-none transition-all text-gray-700">
             </div>
 
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Quantas vezes você caga por dia?</label>
-                <div class="flex items-center space-x-4">
-                    <input type="range" id="frequency" min="0.1" max="5" step="0.1" value="1"
-                           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-amber-800">
-                    <span id="freq-value" class="font-bold text-amber-900 w-12 text-center">1</span>
-                </div>
+            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-3">Frequência: <span id="freq-value" class="text-amber-800">1.0</span>x / dia</label>
+                <input type="range" id="frequency" min="0.1" max="5" step="0.1" value="1"
+                       class="w-full bg-gray-200 rounded-lg appearance-none cursor-pointer accent-amber-800 h-3">
             </div>
 
             <button onclick="calcular()" 
-                    class="w-full py-4 gradient-bg text-white font-bold rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all">
-                CALCULAR MEU LEGADO
+                    class="w-full py-4 gradient-bg text-white font-bold rounded-2xl shadow-xl active:scale-95 transition-all text-lg uppercase tracking-wide">
+                Calcular Impacto
             </button>
 
             <!-- Results -->
-            <div id="result-container" class="hidden space-y-4">
-                <div class="h-px bg-gray-200 w-full my-6"></div>
+            <div id="result-container" class="hidden space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 
-                <div class="text-center">
-                    <p class="text-gray-500 text-xs uppercase font-bold tracking-widest">Massa Total Acumulada:</p>
-                    <div class="text-5xl font-800 text-amber-900 my-2" id="kg-total">0 kg</div>
-                    <p class="text-sm font-semibold text-amber-700 mb-4" id="fun-fact"></p>
+                <div class="text-center py-4">
+                    <p class="text-gray-400 text-[10px] uppercase font-bold tracking-widest">Peso Total Acumulado</p>
+                    <div class="text-5xl font-800 text-amber-900" id="kg-total">0 kg</div>
+                    <p class="text-xs font-semibold text-amber-700 mt-1" id="fun-fact"></p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-3">
-                    <!-- Metano -->
-                    <div class="card-stats p-4 rounded-r-xl">
-                        <p class="text-xs font-bold text-gray-500 uppercase">Gás Metano (CH₄)</p>
-                        <p class="text-xl font-bold text-gray-800" id="gas-metano">0 Litros</p>
-                        <p class="text-[10px] text-gray-400">Potencial de emissão em biodigestores.</p>
+                <!-- Stats Principais -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 text-center">
+                        <p class="text-[9px] font-bold text-blue-400 uppercase">Metano (CH4)</p>
+                        <p class="text-xl font-bold text-blue-900" id="gas-metano">0 L</p>
                     </div>
-
-                    <!-- Energia -->
-                    <div class="card-stats p-4 rounded-r-xl border-amber-600">
-                        <p class="text-xs font-bold text-gray-500 uppercase">Energia Gerada</p>
-                        <p class="text-xl font-bold text-gray-800" id="energia-total">0 kWh</p>
-                        <p class="text-[10px] text-gray-400">Conversão estimada de biogás para eletricidade.</p>
+                    <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-center">
+                        <p class="text-[9px] font-bold text-green-400 uppercase">Eletricidade</p>
+                        <p class="text-xl font-bold text-green-900" id="energia-total">0 kWh</p>
                     </div>
                 </div>
 
-                <!-- Equivalências -->
-                <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100">
-                    <p class="text-center text-xs font-bold text-amber-800 mb-3 uppercase tracking-wider">O que daria para fazer?</p>
-                    <ul class="text-sm space-y-2 text-amber-900">
-                        <li class="flex items-center">
-                            <span class="mr-2">📺</span> 
-                            <span>Assistir TV por: <strong id="time-tv">0</strong></span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="mr-2">❄️</span> 
-                            <span>Ar-condicionado ligado por: <strong id="time-ac">0</strong></span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="mr-2">💡</span> 
-                            <span>Lâmpada LED acesa por: <strong id="time-led">0</strong></span>
-                        </li>
-                    </ul>
+                <!-- Aproveitamento Energético (Subiu para antes da explosão) -->
+                <div class="bg-white p-5 rounded-3xl border-2 border-gray-100 shadow-sm">
+                    <p class="text-[10px] font-bold text-gray-400 mb-4 uppercase text-center tracking-widest">Aproveitamento Energético</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-3">
+                                <span class="bg-amber-100 p-2 rounded-lg">🔥</span>
+                                <span class="font-medium text-gray-600">Boca de Fogão</span>
+                            </div>
+                            <strong id="time-stove">0</strong>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-3">
+                                <span class="bg-amber-100 p-2 rounded-lg">🚿</span>
+                                <span class="font-medium text-gray-600">Banho Quente</span>
+                            </div>
+                            <strong id="time-shower">0</strong>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-3">
+                                <span class="bg-amber-100 p-2 rounded-lg">❄️</span>
+                                <span class="font-medium text-gray-600">Ar-condicionado</span>
+                            </div>
+                            <strong id="time-ac">0</strong>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-3">
+                                <span class="bg-amber-100 p-2 rounded-lg">📺</span>
+                                <span class="font-medium text-gray-600">Televisão LED</span>
+                            </div>
+                            <strong id="time-tv">0</strong>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-3">
+                                <span class="bg-amber-100 p-2 rounded-lg">📱</span>
+                                <span class="font-medium text-gray-600">Cargas de Celular</span>
+                            </div>
+                            <strong id="smartphone-charges">0</strong>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- TNT & Destruction (Agora no Final) -->
+                <div class="tnt-bg p-5 rounded-3xl text-white shadow-xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <p class="text-[10px] font-bold uppercase opacity-80 tracking-widest">⚠️ Potencial Explosivo Total</p>
+                        <div class="flex items-baseline space-x-2 my-1">
+                            <span class="text-4xl font-800" id="tnt-total">0</span>
+                            <span class="text-xl font-bold opacity-90">kg de TNT 🧨</span>
+                        </div>
+                        
+                        <div class="mt-4 space-y-3">
+                            <div class="bg-white/20 p-3 rounded-xl backdrop-blur-sm border border-white/10">
+                                <p class="text-[10px] font-bold uppercase opacity-90">☢️ Raio de Aniquilação (20 psi)</p>
+                                <p class="text-xl font-800" id="raio-20">0 metros</p>
+                                <p class="text-[8px] opacity-80 leading-tight">Colapso total de estruturas de concreto reforçado.</p>
+                            </div>
+
+                            <div class="bg-white/15 p-3 rounded-xl backdrop-blur-sm border border-white/5">
+                                <p class="text-[10px] font-bold uppercase opacity-90">🏚️ Danos Estruturais Graves (5 psi)</p>
+                                <p class="text-lg font-800" id="raio-5">0 metros</p>
+                                <p class="text-[8px] opacity-80 leading-tight">Casas de alvenaria/madeira são destruídas.</p>
+                            </div>
+
+                            <div class="bg-black/10 p-3 rounded-xl backdrop-blur-sm border border-black/5">
+                                <p class="text-[10px] font-bold uppercase opacity-90">🪟 Quebra de Vidros (1 psi)</p>
+                                <p class="text-md font-800" id="raio-1">0 metros</p>
+                                <p class="text-[8px] opacity-80 leading-tight">Vidros estouram causando ferimentos por estilhaços.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -right-4 -top-4 text-7xl opacity-10">💥</div>
+                </div>
+                
+                <div class="h-8"></div>
             </div>
         </div>
 
-        <div class="bg-gray-50 p-4 text-center text-[10px] text-gray-400">
-            Cálculos baseados em: 128g/dia | 0.05m³ biogás/kg | 60% metano | Eficiência elétrica 35%.
+        <div class="p-6 text-center text-[9px] text-gray-400 bg-gray-50 border-t border-gray-100">
+            Cálculo Explosivo: Kingery-Bulmash Blast Scaling. <br>
+            Cálculo Fogão: Consumo médio de 150L de biogás por hora por boca.
         </div>
     </div>
 
@@ -109,67 +169,83 @@
         const freqValue = document.getElementById('freq-value');
 
         freqSlider.addEventListener('input', () => {
-            freqValue.textContent = freqSlider.value;
+            freqValue.textContent = parseFloat(freqSlider.value).toFixed(1);
         });
 
-        function formatHours(hours) {
-            if (hours < 1) return Math.round(hours * 60) + " minutos";
-            if (hours < 24) return Math.round(hours) + " horas";
-            return Math.round(hours / 24) + " dias";
+        function formatUnits(val) {
+            if (val <= 0) return "0 min";
+            if (val < 1) return Math.round(val * 60) + " min";
+            if (val < 24) return Math.round(val) + " h";
+            if (val < 8760) return Math.round(val / 24) + " dias";
+            return (val / 8760).toFixed(1) + " anos";
         }
 
         function calcular() {
             const birthdateInput = document.getElementById('birthdate').value;
-            if (!birthdateInput) return;
+            if (!birthdateInput) {
+                alert("Por favor, insira a sua data de nascimento!");
+                return;
+            }
 
             const birthDate = new Date(birthdateInput);
             const today = new Date();
-            const diffTime = Math.abs(today - birthDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
             if (today < birthDate) return;
 
+            const diffDays = Math.ceil(Math.abs(today - birthDate) / (1000 * 60 * 60 * 24));
             const freqDiaria = parseFloat(freqSlider.value);
-            const pesoMedioKg = 0.128; 
-
-            // Cálculos Principais
-            const totalKg = diffDays * freqDiaria * pesoMedioKg;
+            const totalKgFezes = diffDays * freqDiaria * 0.128; 
             
-            // Estimativas Científicas:
-            // 1kg de fezes úmidas pode produzir cerca de 50 a 100 litros de biogás. 
-            // Vamos usar 50L (0.05m³) por segurança. 60% desse biogás é Metano.
-            const biogásM3 = totalKg * 0.05;
-            const metanoLitros = biogásM3 * 0.60 * 1000; // 60% do biogás é metano
+            // Biogás e Energia
+            const biogásM3 = totalKgFezes * 0.05;
+            const metanoLitros = biogásM3 * 0.6 * 1000; 
 
-            // Energia: 1m³ de biogás tem ~6kWh de energia térmica. 
-            // Convertendo para elétrica (35% eficiência): 1m³ ≈ 2.1 kWh
+            // Energia Térmica Total para TNT
+            const energiaTotalMJ = biogásM3 * 21; 
             const totalKWh = biogásM3 * 2.1;
 
-            // Mostrar resultados
+            // Equivalência TNT
+            const kgTNT = energiaTotalMJ / 4.184;
+
+            // Zonas de Blast
+            const rootTNT = Math.pow(kgTNT, 1/3);
+            const raio20 = 2.4 * rootTNT;
+            const raio5 = 6.5 * rootTNT;
+            const raio1 = 14.5 * rootTNT;
+
+            // Update UI
             document.getElementById('result-container').classList.remove('hidden');
-            document.getElementById('kg-total').textContent = totalKg.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + " kg";
-            document.getElementById('gas-metano').textContent = Math.round(metanoLitros).toLocaleString('pt-BR') + " Litros";
-            document.getElementById('energia-total').textContent = totalKWh.toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + " kWh";
+            document.getElementById('kg-total').textContent = totalKgFezes.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + " kg";
+            document.getElementById('tnt-total').textContent = kgTNT.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+            
+            document.getElementById('raio-20').textContent = raio20.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + " metros";
+            document.getElementById('raio-5').textContent = raio5.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + " metros";
+            document.getElementById('raio-1').textContent = raio1.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + " metros";
 
-            // Equivalências Energéticas
-            // TV LED média: 0.1 kW (100W)
-            // Ar condicionado: 1.5 kW (1500W)
-            // Lâmpada LED: 0.01 kW (10W)
-            document.getElementById('time-tv').textContent = formatHours(totalKWh / 0.1);
-            document.getElementById('time-ac').textContent = formatHours(totalKWh / 1.5);
-            document.getElementById('time-led').textContent = formatHours(totalKWh / 0.01);
+            document.getElementById('gas-metano').textContent = Math.round(metanoLitros).toLocaleString('pt-BR') + " L";
+            document.getElementById('energia-total').textContent = totalKWh.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + " kWh";
 
-            // Comparação de Peso
-            let comparacao = "";
-            if (totalKg < 50) comparacao = "O peso de um saco de cimento!";
-            else if (totalKg < 150) comparacao = "O peso de uma moto CG 160!";
-            else if (totalKg < 500) comparacao = "O peso de um cavalo adulto!";
-            else if (totalKg < 1000) comparacao = "O peso de um carro popular!";
-            else comparacao = "Mais de uma TONELADA de legado!";
+            // Equivalências Eletrodomésticos
+            // Fogão: Uma boca média gasta ~0.15 m3 (150L) de biogás por hora
+            const horasFogao = biogásM3 / 0.15;
+            document.getElementById('time-stove').textContent = formatUnits(horasFogao);
 
-            document.getElementById('fun-fact').textContent = "Isso equivale a: " + comparacao;
+            document.getElementById('time-shower').textContent = formatUnits(totalKWh / 5.5);
+            document.getElementById('time-ac').textContent = formatUnits(totalKWh / 1.5);
+            document.getElementById('time-tv').textContent = formatUnits(totalKWh / 0.1);
 
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            const charges = Math.floor(totalKWh / 0.015);
+            document.getElementById('smartphone-charges').textContent = charges.toLocaleString('pt-BR');
+
+            let comp = "";
+            if (totalKgFezes < 150) comp = "Uma moto Honda Biz";
+            else if (totalKgFezes < 1000) comp = "Um Fusca clássico";
+            else if (totalKgFezes < 5000) comp = "Um Elefante Africano";
+            else comp = "Uma Baleia Azul";
+            document.getElementById('fun-fact').textContent = "Peso de: " + comp;
+
+            setTimeout(() => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 100);
         }
     </script>
 </body>
