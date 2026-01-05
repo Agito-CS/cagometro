@@ -30,7 +30,7 @@
         <div class="gradient-bg p-8 text-center text-white rounded-b-[50px] shadow-lg">
             <div class="text-6xl mb-3">💩</div>
             <h1 class="text-3xl font-800 uppercase tracking-tighter">Cagômetro</h1>
-            <p class="text-xs opacity-90 font-medium tracking-wide">Cálculo Conservador (Padrão IPCC)</p>
+            <p class="text-xs opacity-90 font-medium tracking-wide">Auditoria Fecal Completa</p>
         </div>
 
         <!-- Form Section -->
@@ -49,7 +49,7 @@
 
             <button onclick="calcular()" 
                     class="w-full py-5 gradient-bg text-white font-900 rounded-3xl shadow-xl active:scale-95 transition-all text-xl uppercase tracking-widest">
-                Calcular Impacto Real
+                Calcule essa Merda
             </button>
 
             <!-- Results -->
@@ -79,34 +79,41 @@
                 <!-- Utilidade Prática -->
                 <div class="bg-white p-6 rounded-[40px] border-2 border-gray-100 shadow-sm">
                     <p class="text-[11px] font-900 text-gray-400 mb-5 uppercase text-center tracking-widest">Aproveitamento Energético</p>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="flex items-center justify-between p-2 bg-gray-50 rounded-xl">
                             <div class="flex items-center space-x-3">
                                 <span class="text-xl">🍳</span>
                                 <span class="text-xs font-800 text-gray-500 uppercase">Boca de Fogão</span>
                             </div>
-                            <strong class="text-lg font-900 text-gray-700" id="time-stove">0</strong>
+                            <strong class="text-md font-900 text-gray-700" id="time-stove">0</strong>
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between p-2 bg-gray-50 rounded-xl">
                             <div class="flex items-center space-x-3">
                                 <span class="text-xl">❄️</span>
                                 <span class="text-xs font-800 text-gray-500 uppercase">Ar Condicionado</span>
                             </div>
-                            <strong class="text-lg font-900 text-gray-700" id="time-ac">0</strong>
+                            <strong class="text-md font-900 text-gray-700" id="time-ac">0</strong>
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between p-2 bg-gray-50 rounded-xl">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-xl">📺</span>
+                                <span class="text-xs font-800 text-gray-500 uppercase">Televisão Ligada</span>
+                            </div>
+                            <strong class="text-md font-900 text-gray-700" id="time-tv">0</strong>
+                        </div>
+                        <div class="flex items-center justify-between p-2 bg-gray-50 rounded-xl">
                             <div class="flex items-center space-x-3">
                                 <span class="text-xl">🚿</span>
                                 <span class="text-xs font-800 text-gray-500 uppercase">Banho Quente</span>
                             </div>
-                            <strong class="text-lg font-900 text-gray-700" id="time-shower">0</strong>
+                            <strong class="text-md font-900 text-gray-700" id="time-shower">0</strong>
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between p-2 bg-gray-50 rounded-xl">
                             <div class="flex items-center space-x-3">
                                 <span class="text-xl">📱</span>
                                 <span class="text-xs font-800 text-gray-500 uppercase">Cargas de Celular</span>
                             </div>
-                            <strong class="text-lg font-900 text-gray-700" id="smartphone-charges">0</strong>
+                            <strong class="text-md font-900 text-gray-700" id="smartphone-charges">0</strong>
                         </div>
                     </div>
                 </div>
@@ -138,9 +145,9 @@
             </div>
         </div>
 
-        <!-- Footer -->
-        <div class="p-6 text-center text-[9px] text-gray-400 bg-gray-50 border-t border-gray-100 uppercase font-bold tracking-widest">
-            Física: 25% Matéria Seca | Rendimento Metano: 0.21m³/kg SV | 1kg CH4 ≈ 11.9kg TNT.
+        <!-- Footer Simples -->
+        <div class="p-6 text-center text-[10px] text-gray-400 bg-gray-50 border-t border-gray-100 uppercase font-bold tracking-widest">
+            Aproveitamento de biogás para fins educacionais e curiosos.
         </div>
     </div>
 
@@ -169,21 +176,17 @@
             const diffDays = Math.ceil(Math.abs(today - birthDate) / (1000 * 60 * 60 * 24));
             const freqDiaria = parseFloat(freqSlider.value);
             
-            // 1. MASSA FECAL (Média 128g por evacuação)
+            // 1. MASSA FECAL
             const totalKgFezes = diffDays * freqDiaria * 0.128; 
             
             // 2. MASSA DE METANO (CH4)
-            // 1kg fezes úmidas -> 0.25kg matéria seca -> 0.20kg SV -> 0.042m³ CH4 -> ~0.027kg CH4
             const metanoMassaKg = totalKgFezes * 0.027594; 
 
             // 3. ENERGIA ELÉTRICA
             const energiaTermicaMJ = metanoMassaKg * 50;
             const totalKWh = (energiaTermicaMJ / 3.6) * 0.25;
 
-            // 4. POTENCIAL TNT (REVERSÃO PARA MODELO DE SEGURANÇA INDUSTRIAL)
-            // Equivalência Energética Bruta: 1kg Metano = 11.95kg TNT
-            // Eficiência de Explosão (Impacto de Onda de Choque): 10%
-            // Este é o padrão para estimativa de danos estruturais.
+            // 4. POTENCIAL TNT
             const eficienciaRealExplosiva = 0.10; 
             const kgTNT = metanoMassaKg * 11.95 * eficienciaRealExplosiva;
 
@@ -192,14 +195,16 @@
             const raio20psi = 2.4 * rootTNT; 
             const raio1psi = 14.5 * rootTNT;
 
-            // UI
+            // UI UPDATE
             document.getElementById('result-container').classList.remove('hidden');
             document.getElementById('kg-total').textContent = Math.round(totalKgFezes).toLocaleString('pt-BR') + " kg";
             document.getElementById('metano-massa').textContent = metanoMassaKg.toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + " kg";
             document.getElementById('energia-total').textContent = totalKWh.toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + " kWh";
 
+            // Aproveitamentos
             document.getElementById('time-stove').textContent = formatTime(metanoMassaKg / 0.11);
-            document.getElementById('time-ac').textContent = formatTime(totalKWh / 1.2);
+            document.getElementById('time-ac').textContent = formatTime(totalKWh / 1.2); 
+            document.getElementById('time-tv').textContent = formatTime(totalKWh / 0.10); 
             document.getElementById('time-shower').textContent = formatTime(totalKWh / 7);
             document.getElementById('smartphone-charges').textContent = Math.floor(totalKWh / 0.015).toLocaleString('pt-BR');
 
